@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <title>Student list</title>
+</head>
+<body>
+    <div class="d-grid gap-3">
+    <table class="table mt-4">
+        <thead>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Prijavljen ispit</th>
+            <th>IndeksID</th>
+            <th>IndeksBroj</th>
+        </thead>
+        <tbody id = "tbody">
+            
+        </tbody>
+    </table>
+</div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-analytics.js"></script>
+    <script >
+        // Import the functions you need from the SDKs you need
+
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyDvxFhKWysBtVfpUwUw6e-ZoASMYmGmW-U",
+          authDomain: "e-index-27552.firebaseapp.com",
+          databaseURL: "https://e-index-27552-default-rtdb.europe-west1.firebasedatabase.app",
+          projectId: "e-index-27552",
+          storageBucket: "e-index-27552.appspot.com",
+          messagingSenderId: "936736047382",
+          appId: "1:936736047382:web:0dba9ab15341c87c201037",
+          measurementId: "G-G5WQKLZN5Q"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        function SellectAllData(){
+        firebase.database().ref('Student').once('value', 
+        function(SviPodaci){
+            SviPodaci.forEach(
+                function(TrenutniPodatak){
+                    var ime = TrenutniPodatak.val().Ime;
+                    var prezime = TrenutniPodatak.val().Prezime;
+                    var prijava = TrenutniPodatak.val().PrijavaIspita;
+                    var indeksID = TrenutniPodatak.val().IndeksID;
+                    var indeksBroj = TrenutniPodatak.val().IndeksBroj;
+                    AddItemsToTable(ime, prezime, prijava, indeksID, indeksBroj);
+                }
+            );
+        });
+    };
+
+        window.onload = SellectAllData;
+
+        function AddItemsToTable(ime, prezime, prijava, indeksID, indeksBroj){
+            var tbody = document.getElementById('tbody');
+            var trow = document.createElement('tr');
+            var td1 = document.createElement('td');
+            var td2 = document.createElement('td');
+            var td3 = document.createElement('td');
+            var td4 = document.createElement('td');
+            var td5 = document.createElement('td');
+
+            td1.innerHTML = ime;
+            td2.innerHTML = prezime;
+            td3.innerHTML = prijava;
+            td4.innerHTML = indeksID;
+            td5.innerHTML = indeksBroj;
+
+            trow.appendChild(td1);
+            trow.appendChild(td2);
+            trow.appendChild(td3);
+            trow.appendChild(td4);
+            trow.appendChild(td5);
+
+            tbody.appendChild(trow);
+        };
+        </script>
+</body>
+</html>
